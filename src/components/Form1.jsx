@@ -36,7 +36,7 @@ export default function Form1() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Orders
+            Dishes
           </Typography>
           <Box
             component="form"
