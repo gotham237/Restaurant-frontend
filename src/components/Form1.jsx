@@ -8,20 +8,46 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
+import { useIngredients } from "../api/useIngredients";
+import { useCreateDish } from "../api/useCreateDish";
+import { useForm } from "react-hook-form";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Form1() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const { isLoading, error, ingredients } = useIngredients();
+  const { isCreating, createDish } = useCreateDish();
+  const { register, formState, getValues, handleSubmit, reset } = useForm();
+
+  if (isLoading) return "Loading...";
+
+  const onSubmit = ({
+    name,
+    price,
+    ingredient1,
+    ingredient2,
+    ingredient3,
+    ingredient4,
+    ingredient5,
+  }) => {
+
+    const dishIngredients = [ingredient1, ingredient2, ingredient3, ingredient4, ingredient5];
+    let nonEmptyIngredientIds = [];
+    dishIngredients.map(ingredient => {
+      if (ingredient) {
+        nonEmptyIngredientIds.push(ingredient.id);
+      }
+    })
+
+    createDish(
+      { name, price, nonEmptyIngredientIds},
+      {
+        onSettled: () => reset(),
+      }
+    );
   };
-  
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -36,7 +62,7 @@ export default function Form1() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Dishes
+            Create dish
           </Typography>
           <Box
             component="form"
@@ -44,36 +70,126 @@ export default function Form1() {
             noValidate
             sx={{ mt: 1 }}
           >
-            <InputLabel sx={{ textAlign: "left" }}>Select field</InputLabel>
-            <Select required fullWidth sx={{ mt: 1, mb: 1 }}>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
-            </Select>
-            <InputLabel sx={{ textAlign: "left" }}>Select field</InputLabel>
-            <Select required fullWidth sx={{ mt: 1, mb: 1 }}>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
-            </Select>
-            <InputLabel sx={{ textAlign: "left" }}>Select field</InputLabel>
-            <Select required fullWidth sx={{ mt: 1, mb: 1 }}>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
-            </Select>
+            <div>
+              <InputLabel sx={{ textAlign: "left" }}>
+                Ingredient nr 1
+              </InputLabel>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredient1", {
+                  required: "At least 2 items are required.",
+                })}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.name} key={ingredient.name}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <InputLabel sx={{ textAlign: "left" }}>
+                Ingredient nr 2
+              </InputLabel>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredient2", {
+                  required: "At least 2 items are required.",
+                })}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.name} key={ingredient.name}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <InputLabel sx={{ textAlign: "left" }}>
+                Ingredient nr 3
+              </InputLabel>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredient3", {})}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.name} key={ingredient.name}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <InputLabel sx={{ textAlign: "left" }}>
+                Ingredient nr 4
+              </InputLabel>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredient4", {})}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.name} key={ingredient.name}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <InputLabel sx={{ textAlign: "left" }}>
+                Ingredient nr 5
+              </InputLabel>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredient5", {})}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.name} key={ingredient.name}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+
             <TextField
               margin="normal"
               required
               fullWidth
-              name="some field"
-              label="some field"
+              name="name"
+              label="name"
+              disabled={isCreating}
+              {...register("name", { required: "This field is required." })}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="price"
+              label="price"
+              disabled={isCreating}
+              {...register("price", { required: "This field is required." })}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onSubmit={handleSubmit(onSubmit)}
+              disabled={isCreating}
             >
               Submit
             </Button>

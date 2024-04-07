@@ -43,7 +43,7 @@ export default function Form2() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Orders
+            Create order
           </Typography>
           <Box
             component="form"
