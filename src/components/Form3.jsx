@@ -52,6 +52,13 @@ export default function Form1() {
               name="quantity"
               label="quantity"
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="price"
+              label="price"
+            />
             <Button
               type="submit"
               fullWidth
