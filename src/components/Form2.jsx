@@ -8,13 +8,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
-import {getDishes} from "../api/dishes";
+import { useDishes } from "../api/useDishes";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+//const dishes = [{ name: "pizza" }, { name: "chicken" }, { name: "burrito" }];
+
 export default function Form2() {
-  const dishes = getDishes();
+  const { isLoading, error, dishes } = useDishes();
+
+  if (isLoading) return "Loading...";
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,7 +28,7 @@ export default function Form2() {
       password: data.get("password"),
     });
   };
-  
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -39,7 +43,7 @@ export default function Form2() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Orders
+            Create order
           </Typography>
           <Box
             component="form"
@@ -63,12 +67,20 @@ export default function Form2() {
               name="email"
               label="email"
             />
-            <InputLabel sx={{ textAlign: "left" }}>Dish nr 1</InputLabel>
-            <Select required fullWidth sx={{ mt: 1, mb: 1 }}>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
-            </Select>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div key={index}>
+                <InputLabel sx={{ textAlign: "left" }}>
+                  Dish nr {index + 1}
+                </InputLabel>
+                <Select required fullWidth sx={{ mt: 1, mb: 1 }}>
+                  {dishes.map((dish) => (
+                    <MenuItem value={dish.name} key={dish.name}>
+                      {dish.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </div>
+            ))}
             <TextField
               margin="normal"
               required
