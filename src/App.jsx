@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Toaster } from "react-hot-toast"; 
+import { Toaster } from "react-hot-toast";
 import CreateDishForm from "./components/CreateDishForm";
 import CreateOrderForm from "./components/CreateOrderForm";
+import Form3 from "./components/Form3";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,7 @@ export default function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <CreateDishForm />
       <CreateOrderForm />
-
+      <Form3 />
       <Toaster
         position="top-center"
         gutter={12}
