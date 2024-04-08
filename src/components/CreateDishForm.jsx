@@ -49,13 +49,17 @@ export default function CreateDishForm() {
         nonEmptyDishIngredientIds.push(parseInt(id));
       }
     }
-  
-  createDish(
-    { dishName: name, price: parseInt(price), ingredientIds: nonEmptyDishIngredientIds },
-    {
-      onSettled: () => reset(),
-    }
-  );
+
+    createDish(
+      {
+        dishName: name,
+        price: parseInt(price),
+        ingredientIds: nonEmptyDishIngredientIds,
+      },
+      {
+        onSettled: () => reset(),
+      }
+    );
   };
 
   return (
@@ -81,83 +85,128 @@ export default function CreateDishForm() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <InputLabel sx={{ textAlign: "left" }}>Ingredient nr 1</InputLabel>
-            <Select
-              required
-              fullWidth
-              sx={{ mt: 1, mb: 1 }}
-              disabled={isLoading || isCreating}
-              {...register("ingredientId1", {
-                required: "At least 2 items are required.",
-              })}
-            >
-              {ingredients.map((ingredient) => (
-                <MenuItem value={ingredient.id} key={ingredient.id}>
-                  {ingredient.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredientId1", {
+                  required: "At least 2 items are required.",
+                })}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.id} key={ingredient.id}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <MenuItem value={num} key={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
 
             <InputLabel sx={{ textAlign: "left" }}>Ingredient nr 2</InputLabel>
-            <Select
-              required
-              fullWidth
-              sx={{ mt: 1, mb: 1 }}
-              disabled={isLoading || isCreating}
-              {...register("ingredientId2", {
-                required: "At least 2 items are required.",
-              })}
-            >
-              {ingredients.map((ingredient) => (
-                <MenuItem value={ingredient.id} key={ingredient.id}>
-                  {ingredient.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredientId2", {
+                  required: "At least 2 items are required.",
+                })}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.id} key={ingredient.id}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <MenuItem value={num} key={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
 
             <InputLabel sx={{ textAlign: "left" }}>Ingredient nr 3</InputLabel>
-            <Select
-              required
-              fullWidth
-              sx={{ mt: 1, mb: 1 }}
-              disabled={isLoading || isCreating}
-              {...register("ingredientId3", {})}
-            >
-              {ingredients.map((ingredient) => (
-                <MenuItem value={ingredient.id} key={ingredient.id}>
-                  {ingredient.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredientId3", {})}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.id} key={ingredient.id}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <MenuItem value={num} key={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
 
             <InputLabel sx={{ textAlign: "left" }}>Ingredient nr 4</InputLabel>
-            <Select
-              required
-              fullWidth
-              sx={{ mt: 1, mb: 1 }}
-              disabled={isLoading || isCreating}
-              {...register("ingredientId4", {})}
-            >
-              {ingredients.map((ingredient) => (
-                <MenuItem value={ingredient.id} key={ingredient.id}>
-                  {ingredient.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredientId4", {})}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.id} key={ingredient.id}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <MenuItem value={num} key={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
 
             <InputLabel sx={{ textAlign: "left" }}>Ingredient nr 5</InputLabel>
-            <Select
-              required
-              fullWidth
-              sx={{ mt: 1, mb: 1 }}
-              disabled={isLoading || isCreating}
-              {...register("ingredientId5", {})}
-            >
-              {ingredients.map((ingredient) => (
-                <MenuItem value={ingredient.id} key={ingredient.id}>
-                  {ingredient.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Select
+                required
+                fullWidth
+                sx={{ mt: 1, mb: 1 }}
+                disabled={isLoading || isCreating}
+                {...register("ingredientId5", {})}
+              >
+                {ingredients.map((ingredient) => (
+                  <MenuItem value={ingredient.id} key={ingredient.id}>
+                    {ingredient.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <MenuItem value={num} key={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
 
             <TextField
               margin="normal"
