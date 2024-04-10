@@ -3,7 +3,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import CreateDishForm from "./components/CreateDishForm";
 import CreateOrderForm from "./components/CreateOrderForm";
-import Form3 from "./components/Form3";
+import CreateIngredientForm from "./components/CreateIngredientForm";
+import IngredientsTable from "./components/IngredientsTable";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,8 @@ export default function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <CreateDishForm />
       <CreateOrderForm />
-      <Form3 />
+      <CreateIngredientForm />
+      <IngredientsTable />
       <Toaster
         position="top-center"
         gutter={12}
