@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
 import { useCreateIngredient } from "../api/useCreateIngredient";
+import { useUpdateIngredient } from "../api/useUpdateIngredient";
 import { useIngredients } from "../api/useIngredients";
 import { useForm } from "react-hook-form";
 
@@ -14,8 +15,9 @@ import { useForm } from "react-hook-form";
 const defaultTheme = createTheme();
 
 export default function CreateIngredientForm() {
-  const { isLoading, error } = useIngredients();
+  const { isLoading, ingredients, error } = useIngredients();
   const { isCreating, createIngredient } = useCreateIngredient();
+  const { isUpdating, updateIngredient } = useUpdateIngredient();
   const { register, handleSubmit, reset } = useForm();
 
   if (isLoading) return "Loading...";
@@ -25,16 +27,30 @@ export default function CreateIngredientForm() {
   }
 
   const onSubmit = ({ name, quantity, price }) => {
-    createIngredient(
-      {
-        name,
-        quantity,
-        price: parseInt(price),
-      },
-      {
-        onSettled: () => reset(),
-      }
-    );
+    const foundIngredient = ingredients.find((i) => i.name == name);
+    
+    if (foundIngredient) {
+      updateIngredient(
+        {
+          id: foundIngredient.id,
+          quantity,
+        },
+        {
+          onSettled: () => reset(),
+        }
+      );
+    } else {
+      createIngredient(
+        {
+          name,
+          quantity,
+          price: parseInt(price),
+        },
+        {
+          onSettled: () => reset(),
+        }
+      );
+    }
   };
 
   return (
@@ -61,7 +77,7 @@ export default function CreateIngredientForm() {
               fullWidth
               name="name"
               label="name"
-              disabled={isCreating}
+              disabled={isCreating || isUpdating}
               {...register("name", { required: "This field is required." })}
             />
             <TextField
@@ -70,7 +86,7 @@ export default function CreateIngredientForm() {
               fullWidth
               name="quantity"
               label="quantity"
-              disabled={isCreating}
+              disabled={isCreating || isUpdating}
               {...register("quantity", { required: "This field is required." })}
             />
             <TextField
@@ -79,14 +95,15 @@ export default function CreateIngredientForm() {
               fullWidth
               name="price"
               label="price"
-              disabled={isCreating}
-              {...register("price", { required: "This field is required." })}
+              disabled={isCreating || isUpdating}
+              {...register("price")}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isCreating || isUpdating}
             >
               Create/Update Ingredient
             </Button>
