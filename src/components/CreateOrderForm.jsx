@@ -57,7 +57,7 @@ export default function CreateOrderForm() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
-          sx={{
+          s={{
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
@@ -82,7 +82,7 @@ export default function CreateOrderForm() {
               name="customer name"
               label="customer name"
               {...register("customerName", {
-                required: true
+                required: true,
               })}
             />
             <InputLabel sx={{ textAlign: "left" }}>Email</InputLabel>
@@ -93,7 +93,7 @@ export default function CreateOrderForm() {
               name="email"
               label="email"
               {...register("email", {
-                required: true
+                required: true,
               })}
             />
             <InputLabel sx={{ textAlign: "left" }}>Dish nr 1</InputLabel>

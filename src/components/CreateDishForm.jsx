@@ -30,10 +30,15 @@ export default function CreateDishForm() {
     name,
     price,
     ingredientId1,
+    quantity1,
     ingredientId2,
+    quantity2,
     ingredientId3,
+    quantity3,
     ingredientId4,
+    quantity4,
     ingredientId5,
+    quantity5,
   }) => {
     const dishIngredientIds = [
       ingredientId1,
@@ -43,10 +48,25 @@ export default function CreateDishForm() {
       ingredientId5,
     ];
 
+    const dishIngredientQuantities = [
+      quantity1,
+      quantity2,
+      quantity3,
+      quantity4,
+      quantity5,
+    ];
+
     let nonEmptyDishIngredientIds = [];
     for (const id of dishIngredientIds) {
       if (id) {
         nonEmptyDishIngredientIds.push(parseInt(id));
+      }
+    }
+
+    let nonEmptyDishQuantities = [];
+    for (const quantity of dishIngredientQuantities) {
+      if (quantity) {
+        nonEmptyDishQuantities.push(parseInt(quantity));
       }
     }
 
@@ -55,6 +75,7 @@ export default function CreateDishForm() {
         dishName: name,
         price: parseInt(price),
         ingredientIds: nonEmptyDishIngredientIds,
+        quantities: nonEmptyDishQuantities,
       },
       {
         onSettled: () => reset(),
@@ -101,7 +122,11 @@ export default function CreateDishForm() {
                   </MenuItem>
                 ))}
               </Select>
-              <Select>
+              <Select
+                {...register("quantity1", {
+                  required: "At least 2 quantities are required.",
+                })}
+              >
                 {[1, 2, 3, 4, 5].map((num) => (
                   <MenuItem value={num} key={num}>
                     {num}
@@ -127,7 +152,11 @@ export default function CreateDishForm() {
                   </MenuItem>
                 ))}
               </Select>
-              <Select>
+              <Select
+                {...register("quantity2", {
+                  required: "At least 2 quantities are required.",
+                })}
+              >
                 {[1, 2, 3, 4, 5].map((num) => (
                   <MenuItem value={num} key={num}>
                     {num}
@@ -151,7 +180,7 @@ export default function CreateDishForm() {
                   </MenuItem>
                 ))}
               </Select>
-              <Select>
+              <Select {...register("quantity3")}>
                 {[1, 2, 3, 4, 5].map((num) => (
                   <MenuItem value={num} key={num}>
                     {num}
@@ -175,7 +204,7 @@ export default function CreateDishForm() {
                   </MenuItem>
                 ))}
               </Select>
-              <Select>
+              <Select {...register("quantity4")}>
                 {[1, 2, 3, 4, 5].map((num) => (
                   <MenuItem value={num} key={num}>
                     {num}
@@ -187,7 +216,6 @@ export default function CreateDishForm() {
             <InputLabel sx={{ textAlign: "left" }}>Ingredient nr 5</InputLabel>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Select
-                required
                 fullWidth
                 sx={{ mt: 1, mb: 1 }}
                 disabled={isLoading || isCreating}
@@ -199,7 +227,7 @@ export default function CreateDishForm() {
                   </MenuItem>
                 ))}
               </Select>
-              <Select>
+              <Select {...register("quantity5")}>
                 {[1, 2, 3, 4, 5].map((num) => (
                   <MenuItem value={num} key={num}>
                     {num}
@@ -230,7 +258,7 @@ export default function CreateDishForm() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 10 }}
               disabled={isCreating}
             >
               Create Dish
