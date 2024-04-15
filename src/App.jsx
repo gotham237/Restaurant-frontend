@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import CreateDishForm from "./components/CreateDishForm";
-import CreateOrderForm from "./components/CreateOrderForm";
-import CreateIngredientForm from "./components/CreateIngredientForm";
-import IngredientsTable from "./components/IngredientsTable";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import Ingredient from "./pages/Ingredient";
+import Dish from "./pages/Dish";
+import Order from "./pages/Order";
+import SignIn from "./components/SignIn";
+import AppLayout from "./components/AppLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,10 +21,18 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <CreateDishForm />
-      <CreateOrderForm />
-      <CreateIngredientForm />
-      <IngredientsTable />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate replace to="signIn" />} />
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signIn" element={<SignIn />} />
+            <Route path="/createOrder" element={<Order />} />
+            <Route path="/createDish" element={<Dish />} />
+            <Route path="/createIngredient" element={<Ingredient />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
       <Toaster
         position="top-center"
         gutter={12}

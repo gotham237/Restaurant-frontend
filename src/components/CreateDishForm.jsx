@@ -97,7 +97,7 @@ export default function CreateDishForm() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Create dish
+            Add dish
           </Typography>
           <Box
             component="form"

@@ -67,7 +67,7 @@ export default function CreateIngredientForm() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Ingredients
+            Add Ingredient
           </Typography>
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
             <InputLabel sx={{ textAlign: "left" }}>Ingredient name</InputLabel>

@@ -66,7 +66,7 @@ export default function CreateOrderForm() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Create order
+            Add order
           </Typography>
           <Box
             component="form"
@@ -74,7 +74,6 @@ export default function CreateOrderForm() {
             noValidate
             sx={{ mt: 1 }}
           >
-            <InputLabel sx={{ textAlign: "left" }}>Customer name</InputLabel>
             <TextField
               margin="normal"
               required
@@ -85,7 +84,7 @@ export default function CreateOrderForm() {
                 required: true,
               })}
             />
-            <InputLabel sx={{ textAlign: "left" }}>Email</InputLabel>
+
             <TextField
               margin="normal"
               required
@@ -106,11 +105,12 @@ export default function CreateOrderForm() {
                 required: "At least 1 dish is required.",
               })}
             >
-              {dishes.map((dish) => (
-                <MenuItem value={dish.id} key={dish.id}>
-                  {dish.name}
-                </MenuItem>
-              ))}
+              {dishes &&
+                dishes.map((dish) => (
+                  <MenuItem value={dish.id} key={dish.id}>
+                    {dish.name}
+                  </MenuItem>
+                ))}
             </Select>
 
             <InputLabel sx={{ textAlign: "left" }}>Dish nr 2</InputLabel>
@@ -121,11 +121,12 @@ export default function CreateOrderForm() {
               disabled={isLoading || isCreating}
               {...register("dishId2")}
             >
-              {dishes.map((dish) => (
-                <MenuItem value={dish.id} key={dish.id}>
-                  {dish.name}
-                </MenuItem>
-              ))}
+              {dishes &&
+                dishes.map((dish) => (
+                  <MenuItem value={dish.id} key={dish.id}>
+                    {dish.name}
+                  </MenuItem>
+                ))}
             </Select>
 
             <InputLabel sx={{ textAlign: "left" }}>Dish nr 3</InputLabel>
@@ -136,11 +137,12 @@ export default function CreateOrderForm() {
               disabled={isLoading || isCreating}
               {...register("dishId3", {})}
             >
-              {dishes.map((dish) => (
-                <MenuItem value={dish.id} key={dish.id}>
-                  {dish.name}
-                </MenuItem>
-              ))}
+              {dishes &&
+                dishes.map((dish) => (
+                  <MenuItem value={dish.id} key={dish.id}>
+                    {dish.name}
+                  </MenuItem>
+                ))}
             </Select>
 
             <InputLabel sx={{ textAlign: "left" }}>Dish nr 4</InputLabel>
@@ -151,11 +153,12 @@ export default function CreateOrderForm() {
               disabled={isLoading || isCreating}
               {...register("dishId4", {})}
             >
-              {dishes.map((dish) => (
-                <MenuItem value={dish.id} key={dish.id}>
-                  {dish.name}
-                </MenuItem>
-              ))}
+              {dishes &&
+                dishes.map((dish) => (
+                  <MenuItem value={dish.id} key={dish.id}>
+                    {dish.name}
+                  </MenuItem>
+                ))}
             </Select>
 
             <InputLabel sx={{ textAlign: "left" }}>Dish nr 5</InputLabel>
@@ -166,11 +169,12 @@ export default function CreateOrderForm() {
               disabled={isLoading || isCreating}
               {...register("dishId5", {})}
             >
-              {dishes.map((dish) => (
-                <MenuItem value={dish.id} key={dish.id}>
-                  {dish.name}
-                </MenuItem>
-              ))}
+              {dishes &&
+                dishes.map((dish) => (
+                  <MenuItem value={dish.id} key={dish.id}>
+                    {dish.name}
+                  </MenuItem>
+                ))}
             </Select>
 
             <Button
