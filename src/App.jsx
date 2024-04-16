@@ -7,6 +7,7 @@ import Dish from "./pages/Dish";
 import Order from "./pages/Order";
 import SignIn from "./components/SignIn";
 import AppLayout from "./components/AppLayout";
+import { useState } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,15 +19,17 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route element={<AppLayout user={user} setUser={setUser} />}>
             <Route index element={<Navigate replace to="signIn" />} />
             <Route path="/" element={<SignIn />} />
-            <Route path="/signIn" element={<SignIn />} />
+            <Route path="/signIn" element={<SignIn setUser={setUser} />} />
             <Route path="/createOrder" element={<Order />} />
             <Route path="/createDish" element={<Dish />} />
             <Route path="/createIngredient" element={<Ingredient />} />

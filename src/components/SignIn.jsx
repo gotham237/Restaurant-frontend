@@ -8,18 +8,37 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { useUsers } from "../api/useSignIn";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({ user, setUser }) {
+  const navigate = useNavigate();
+  const { isLoading, error, users } = useUsers();
+
+  if (isLoading) return;
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const form = event.target.closest("form");
+    if (!form) {
+      console.error("Form element not found");
+      return;
+    }
+
+    const formData = new FormData(form);
+    const email = formData.get("email");
+    
+    const u = users.find((u) => u.email === email);
+    if (u) {
+      setUser(u);
+      navigate("/createOrder", { replace: true });
+      return;
+    }
+
+    toast.error("Wrong email or password");
   };
 
   return (
@@ -68,6 +87,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>
