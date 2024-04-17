@@ -11,7 +11,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,17 +34,36 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function OrdersTable() {
+export default function OrdersTable({wasCreatedOrder, setWasCreatedOrder}) {
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
+  const [filteredOrders, setFilteredOrders] = useState();
 
-  const { isLoading, orders, refetch } = useOrders(from, to);
+  let { isLoading, orders, refetch } = useOrders();
 
   const handleOrdersRefresh = () => {
-    refetch();
+    console.log(123)
+    if (from && to) {
+      const newOrders = orders.filter(order => new Date(order.createdAt) >= from && new Date(order.createdAt) <= to);
+      setFilteredOrders(newOrders);
+    }
   };
+
+  useEffect(() => {
+    refetch();
+    setWasCreatedOrder(false);
+  }, [wasCreatedOrder]);
+
+  useEffect(() => {
+    setFilteredOrders(orders);
+  }, [orders]);
+
   console.log(orders, "orders")
-  if (isLoading) return "Loading...";
+  if (isLoading) return ;
+
+  for (let order of orders) {
+    order.createdAt = moment(order.createdAt).format();
+  }
 
   return (
     <>
@@ -79,7 +99,7 @@ export default function OrdersTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders && orders.map((row) => (
+            {filteredOrders && filteredOrders.map((row) => (
               <StyledTableRow key={row.id}>
                 <StyledTableCell component="th" scope="row">
                   {row.id}

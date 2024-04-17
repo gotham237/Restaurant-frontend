@@ -18,10 +18,11 @@ export function useIngredients() {
     isLoading,
     data: ingredients,
     error,
+    refetch
   } = useQuery({
     queryKey: ["ingredients"],
     queryFn: getIngredients,
   });
 
-  return { isLoading, error, ingredients };
+  return { isLoading, error, ingredients, refetch };
 }

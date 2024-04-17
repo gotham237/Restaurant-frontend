@@ -15,12 +15,19 @@ const createOrderMutation = async ({ customerName, email, dishIds }) => {
 };
 
 export function useCreateOrder() {
+  const queryClient = useQueryClient();
+
   const { mutate: createOrder, isLoading: isCreating } = useMutation({
     mutationFn: ({ customerName, email, dishIds }) => {
       createOrderMutation({customerName, email, dishIds});
     },
     onSuccess: () => {
       toast.success("New order successfully created");
+
+      queryClient.invalidateQueries({
+        queryKey: ["orders"],
+      });
+    
     },
     onError: (err) => toast.error(err.message),
   });

@@ -14,13 +14,13 @@ import { useForm } from "react-hook-form";
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function CreateIngredientForm() {
+export default function CreateIngredientForm({ setWasCreatedIngredient }) {
   const { isLoading, ingredients, error } = useIngredients();
   const { isCreating, createIngredient } = useCreateIngredient();
   const { isUpdating, updateIngredient } = useUpdateIngredient();
   const { register, handleSubmit, reset } = useForm();
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return;
   if (error) {
     console.log(error);
     return;
@@ -28,7 +28,7 @@ export default function CreateIngredientForm() {
 
   const onSubmit = ({ name, quantity, price }) => {
     const foundIngredient = ingredients.find((i) => i.name == name);
-    
+
     if (foundIngredient) {
       updateIngredient(
         {
@@ -36,7 +36,10 @@ export default function CreateIngredientForm() {
           quantity,
         },
         {
-          onSettled: () => reset(),
+          onSettled: () => {
+            setWasCreatedIngredient(true);
+            reset();
+          },
         }
       );
     } else {
@@ -47,7 +50,10 @@ export default function CreateIngredientForm() {
           price: parseInt(price),
         },
         {
-          onSettled: () => reset(),
+          onSettled: () => {
+            setWasCreatedIngredient(true);
+            reset();
+          },
         }
       );
     }

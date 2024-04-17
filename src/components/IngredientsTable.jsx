@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -28,10 +28,15 @@ const StyledTableRow = styled(TableRow)(({ theme, quantity }) => ({
   },
 }));
 
-export default function IngredientsTable() {
-  const { isLoading, ingredients } = useIngredients();
+export default function IngredientsTable({wasCreatedIngredient, setWasCreatedIngredient}) {
+  const { isLoading, ingredients, refetch } = useIngredients();
 
-  if (isLoading) return "Loading...";
+  useEffect(() => {
+    refetch();
+    setWasCreatedIngredient(false);
+  }, [wasCreatedIngredient]);
+
+  if (isLoading) return;
 
   return (
     <TableContainer component={Paper}>

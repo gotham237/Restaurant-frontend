@@ -15,12 +15,12 @@ import { useCreateOrder } from "../api/useCreateOrder";
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function CreateOrderForm() {
+export default function CreateOrderForm({setWasCreatedOrder}) {
   const { isLoading, error, dishes } = useDishes();
   const { isCreating, createOrder } = useCreateOrder();
   const { register, formState, getValues, handleSubmit, reset } = useForm();
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return ;
   if (error) {
     console.log(error);
     return;
@@ -47,7 +47,10 @@ export default function CreateOrderForm() {
     createOrder(
       { customerName, email, dishIds: nonEmptyDishIds },
       {
-        onSettled: () => reset(),
+        onSettled: () => {
+          setWasCreatedOrder(true);
+          reset();
+        },
       }
     );
   };

@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-const getOrders = async ({ from, to }) => {
+const getOrders = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/v1/orders?from=${from}&to=${to}`
+      `http://localhost:8080/api/v1/orders`
     );
     const orders = await response.data;
-    console.log(orders, "nowe ordery")
-    console.log(from, to, "from , to");
+
     return orders;
   } catch (error) {
     console.error("Error fetching orders:", error);
@@ -16,7 +15,7 @@ const getOrders = async ({ from, to }) => {
   }
 };
 
-export function useOrders(from, to) { 
+export function useOrders() { 
   const {
     isLoading,
     data: orders,
@@ -24,7 +23,7 @@ export function useOrders(from, to) {
     refetch
   } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => getOrders({from, to}), 
+    queryFn: () => getOrders(), 
   });
 
   return { isLoading, error, orders, refetch };

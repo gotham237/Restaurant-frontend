@@ -33,7 +33,7 @@ function Navbar({ user, setUser }) {
   console.log(user, " user")
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ marginBottom: '40px' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

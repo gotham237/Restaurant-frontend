@@ -18,9 +18,9 @@ const defaultTheme = createTheme();
 export default function CreateDishForm() {
   const { isLoading, error, ingredients } = useIngredients();
   const { isCreating, createDish } = useCreateDish();
-  const { register, formState, getValues, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return ;
   if (error) {
     console.log(error);
     return;
